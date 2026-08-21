@@ -4,12 +4,12 @@ const optionalTrimmed = (max: number) =>
   z.string().trim().max(max).optional().transform((value) => value || null);
 
 export const reviewSchema = z.object({
-  rating: z.coerce.number().int().min(1, "Choose a rating.").max(5, "Choose a rating."),
-  reviewText: z.string().trim().min(3, "Please write at least 3 characters.").max(1000, "Keep your review under 1,000 characters."),
+  rating: z.coerce.number().int().min(1, "একটি রেটিং নির্বাচন করুন।").max(5, "একটি রেটিং নির্বাচন করুন।"),
+  reviewText: z.string().trim().min(3, "কমপক্ষে ৩টি অক্ষর লিখুন।").max(1000, "রিভিউটি ১,০০০ অক্ষরের মধ্যে রাখুন।"),
   name: optionalTrimmed(80),
   phone: optionalTrimmed(30).refine(
     (value) => !value || /^[+0-9()\-\s]{7,30}$/.test(value),
-    "Enter a valid phone number."
+    "সঠিক ফোন নম্বর লিখুন।"
   ),
   stayAnonymous: z.enum(["true", "false"]).transform((value) => value === "true"),
 });

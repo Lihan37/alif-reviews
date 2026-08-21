@@ -17,7 +17,7 @@ export async function saveReviewAction(_previousState: ActionState, formData: Fo
     stayAnonymous: formData.get("stayAnonymous"),
   });
   if (!parsed.success) {
-    return { ok: false, message: "Please check the highlighted fields.", errors: parsed.error.flatten().fieldErrors };
+    return { ok: false, message: "চিহ্নিত তথ্যগুলো ঠিক করে দিন।", errors: parsed.error.flatten().fieldErrors };
   }
 
   try {
@@ -25,7 +25,7 @@ export async function saveReviewAction(_previousState: ActionState, formData: Fo
     const ip = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
     const fingerprint = requestFingerprint(ip, headerStore.get("user-agent") || "unknown");
     if (!checkRateLimit(`review:${fingerprint}`)) {
-      return { ok: false, message: "Too many attempts. Please wait a few minutes and try again." };
+      return { ok: false, message: "অনেকবার চেষ্টা করা হয়েছে। কয়েক মিনিট পর আবার চেষ্টা করুন।" };
     }
 
     const cookieStore = await cookies();
@@ -43,7 +43,7 @@ export async function saveReviewAction(_previousState: ActionState, formData: Fo
 
     if (intent === "update") {
       if (!existingToken || !reviewId) {
-        return { ok: false, message: "We could not verify ownership of this review." };
+        return { ok: false, message: "এই রিভিউটির মালিকানা যাচাই করা যায়নি।" };
       }
       const { data, error } = await supabase.from("reviews")
         .update({ ...values, updated_at: new Date().toISOString() })
@@ -52,9 +52,9 @@ export async function saveReviewAction(_previousState: ActionState, formData: Fo
       if (error) throw error;
       if (data) {
         revalidatePath("/");
-        return { ok: true, message: "Your review has been updated. Thank you!" };
+        return { ok: true, message: "আপনার রিভিউ হালনাগাদ হয়েছে। ধন্যবাদ!" };
       }
-      return { ok: false, message: "We could not verify ownership of this review." };
+      return { ok: false, message: "এই রিভিউটির মালিকানা যাচাই করা যায়নি।" };
     }
 
     const token = existingToken || createOwnerToken();
@@ -66,9 +66,9 @@ export async function saveReviewAction(_previousState: ActionState, formData: Fo
       });
     }
     revalidatePath("/");
-    return { ok: true, message: "Thank you for your feedback ❤️" };
+    return { ok: true, message: "আপনার মূল্যবান মতামতের জন্য ধন্যবাদ ❤️" };
   } catch (error) {
     console.error("Review save failed", error);
-    return { ok: false, message: "We could not save your review. Please try again." };
+    return { ok: false, message: "আপনার রিভিউ সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।" };
   }
 }

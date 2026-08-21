@@ -9,11 +9,11 @@ function resolveBusinessTimeZone() {
 }
 
 export const siteConfig = {
-  restaurantName: "Alif Restaurant",
-  shortName: "Alif",
-  description: "Share your experience with Alif Restaurant.",
+  restaurantName: "আলিফ রেস্টুরেন্ট",
+  shortName: "আলিফ",
+  description: "আলিফ রেস্টুরেন্টে আপনার অভিজ্ঞতা আমাদের জানান।",
   logoPath: "/logo-mark.svg",
   phone: "+880 1XXX-XXXXXX",
-  address: "Your restaurant address",
+  address: "রেস্টুরেন্টের ঠিকানা",
   businessTimeZone: resolveBusinessTimeZone(),
 } as const;
