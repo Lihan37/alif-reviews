@@ -1,4 +1,5 @@
 import { MessageSquareHeart, ShieldCheck } from "lucide-react";
+import { BilingualText } from "@/components/BilingualText";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { MyReviews } from "@/components/MyReviews";
@@ -20,15 +21,15 @@ export default async function HomePage() {
     <Header />
     <section className="mx-auto grid w-full max-w-6xl items-center gap-10 px-5 pt-8 pb-12 sm:px-8 sm:pt-14 lg:grid-cols-[.85fr_1.15fr] lg:gap-20 lg:pt-20 lg:pb-24">
       <div className="relative z-10 max-w-lg">
-        <p className="eyebrow">আমরা আপনার কথা শুনছি</p>
-        <h1 className="mt-4 font-serif text-4xl leading-[1.2] font-semibold tracking-tight sm:text-5xl lg:text-6xl"><span className="text-burgundy">{siteConfig.shortName}ে</span> আপনার সময় কেমন কেটেছে?</h1>
+        <p className="eyebrow"><BilingualText en="We’re listening" bn="আমরা আপনার কথা শুনছি" /></p>
+        <h1 className="mt-4 font-serif text-4xl leading-[1.15] font-semibold tracking-tight sm:text-5xl lg:text-6xl"><BilingualText en={<>How was your time at <span className="text-burgundy">{siteConfig.shortName}?</span></>} bn={<><span className="text-burgundy">{siteConfig.shortNameBn}ে</span> আপনার সময় কেমন কেটেছে?</>} /></h1>
         <div className="mt-8 flex flex-col gap-3 text-sm text-stone-600 sm:flex-row sm:gap-6">
-          <span className="inline-flex items-center gap-2"><ShieldCheck className="size-4 text-olive" />ব্যক্তিগত ও নিরাপদ</span>
-          <span className="inline-flex items-center gap-2"><MessageSquareHeart className="size-4 text-olive" />সময় লাগবে প্রায় এক মিনিট</span>
+          <span className="inline-flex items-center gap-2"><ShieldCheck className="size-4 text-olive" /><BilingualText en="Private and secure" bn="ব্যক্তিগত ও নিরাপদ" /></span>
+          <span className="inline-flex items-center gap-2"><MessageSquareHeart className="size-4 text-olive" /><BilingualText en="Takes about a minute" bn="সময় লাগবে প্রায় এক মিনিট" /></span>
         </div>
       </div>
       <div className="relative z-10 rounded-[1.75rem] border border-stone-200/80 bg-white/95 p-6 shadow-[0_24px_80px_rgba(73,54,38,0.12)] sm:p-9">
-        {setupMissing ? <SetupNotice /> : reviews.length ? <MyReviews reviews={reviews} /> : <><div className="mb-7"><p className="eyebrow">আপনার কথা জানান</p><h2 className="mt-1 font-serif text-2xl font-semibold sm:text-3xl">আপনার মতামত আমাদের কাছে গুরুত্বপূর্ণ</h2></div><ReviewForm /></>}
+        {setupMissing ? <SetupNotice /> : reviews.length ? <MyReviews reviews={reviews} /> : <><div className="mb-7"><p className="eyebrow"><BilingualText en="Share your thoughts" bn="আপনার কথা জানান" /></p><h2 className="mt-1 font-serif text-2xl font-semibold sm:text-3xl"><BilingualText en="Your feedback matters" bn="আপনার মতামত আমাদের কাছে গুরুত্বপূর্ণ" /></h2></div><ReviewForm /></>}
       </div>
     </section>
     <Footer />
@@ -36,5 +37,5 @@ export default async function HomePage() {
 }
 
 function SetupNotice() {
-  return <div className="py-6 text-center"><h2 className="font-serif text-2xl font-semibold">প্রায় প্রস্তুত</h2><p className="mt-3 leading-7 text-stone-600"><code className="rounded bg-stone-100 px-1.5 py-0.5 text-sm">.env.example</code> ফাইলের environment variable ব্যবহার করে Supabase সংযুক্ত করুন, তারপর দেওয়া database migration চালান।</p></div>;
+  return <div className="py-6 text-center"><h2 className="font-serif text-2xl font-semibold"><BilingualText en="Almost ready" bn="প্রায় প্রস্তুত" /></h2><p className="mt-3 leading-7 text-stone-600">Connect Supabase with the environment variables in <code className="rounded bg-stone-100 px-1.5 py-0.5 text-sm">.env.example</code>, then run the database migration.<br /><span lang="bn">পরিবেশের তথ্য দিয়ে Supabase সংযুক্ত করুন, তারপর database migration চালান।</span></p></div>;
 }

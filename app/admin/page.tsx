@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { AdminLoginForm } from "@/components/AdminLoginForm";
+import { BilingualText } from "@/components/BilingualText";
 import { getAdminSession } from "@/lib/security/admin";
 import { siteConfig } from "@/src/config/site";
 
@@ -11,7 +12,7 @@ export default async function AdminPage() {
   return <main className="flex min-h-screen items-center justify-center bg-stone-100 px-5 py-12">
     <section className="w-full max-w-md rounded-3xl border border-stone-200 bg-white p-7 shadow-xl shadow-stone-900/5 sm:p-10">
       <Image src={siteConfig.logoPath} alt="" width={52} height={52} priority />
-      <p className="eyebrow mt-7">সংরক্ষিত প্রবেশাধিকার</p><h1 className="mt-2 font-serif text-3xl font-semibold">অ্যাডমিন লগইন</h1><p className="mt-3 leading-7 text-stone-500">{siteConfig.restaurantName}-এর গ্রাহকদের ব্যক্তিগত মতামত পরিচালনা করুন।</p>
+      <p className="eyebrow mt-7"><BilingualText en="Restricted access" bn="সংরক্ষিত প্রবেশাধিকার" /></p><h1 className="mt-2 font-serif text-3xl font-semibold"><BilingualText en="Admin sign in" bn="অ্যাডমিন লগইন" /></h1><p className="mt-3 leading-7 text-stone-500"><BilingualText en={`Manage private customer feedback for ${siteConfig.restaurantName}.`} bn={`${siteConfig.restaurantNameBn}-এর গ্রাহকদের ব্যক্তিগত মতামত পরিচালনা করুন।`} /></p>
       <AdminLoginForm />
     </section>
   </main>;

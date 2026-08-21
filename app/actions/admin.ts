@@ -13,12 +13,12 @@ import type { ActionState, ReviewStatus } from "@/lib/types";
 
 export async function adminLoginAction(_previousState: ActionState, formData: FormData): Promise<ActionState> {
   const parsed = adminLoginSchema.safeParse({ phone: formData.get("phone"), password: formData.get("password") });
-  if (!parsed.success) return { ok: false, message: "সঠিক ফোন নম্বর ও পাসওয়ার্ড লিখুন।" };
+  if (!parsed.success) return { ok: false, message: "Enter a valid phone number and password. · সঠিক ফোন নম্বর ও পাসওয়ার্ড লিখুন।" };
 
   const headerStore = await headers();
   const ip = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
   if (!checkRateLimit(`admin:${requestFingerprint(ip, headerStore.get("user-agent") || "unknown")}`, 6)) {
-    return { ok: false, message: "অনেকবার লগইনের চেষ্টা করা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।" };
+    return { ok: false, message: "Too many login attempts. Please try again later. · অনেকবার লগইনের চেষ্টা করা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।" };
   }
 
   const phone = normalizePhone(parsed.data.phone);
@@ -27,7 +27,7 @@ export async function adminLoginAction(_previousState: ActionState, formData: Fo
   const hash = process.env.ADMIN_PASSWORD_HASH;
   const passwordApproved = hash ? await bcrypt.compare(parsed.data.password, hash) : false;
   if (!approvedPhones.includes(phone) || !passwordApproved) {
-    return { ok: false, message: "ফোন নম্বর অথবা পাসওয়ার্ড সঠিক নয়।" };
+    return { ok: false, message: "The phone number or password is incorrect. · ফোন নম্বর অথবা পাসওয়ার্ড সঠিক নয়।" };
   }
 
   await createAdminSession(phone);
