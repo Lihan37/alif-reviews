@@ -17,6 +17,14 @@ button, input, textarea, select { font: inherit; }
 button:not(:disabled) { cursor: pointer; }
 button:disabled { cursor: not-allowed; opacity: .55; }
 
+.hero-title { line-height: 1.2; }
+.hero-title [lang="bn"] {
+  display: block;
+  margin-top: .35em;
+  padding-top: .05em;
+  line-height: 1.5;
+}
+
 .field { @apply w-full rounded-xl border border-stone-300 bg-white px-3.5 py-3 text-base text-charcoal outline-none transition placeholder:text-stone-400 focus:border-burgundy focus:ring-3 focus:ring-burgundy/10; }
 .label { @apply mb-2 flex items-center justify-between text-sm font-semibold text-stone-700; }
 .label span { @apply text-xs font-normal text-stone-400; }
