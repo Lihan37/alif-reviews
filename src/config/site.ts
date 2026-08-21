@@ -1,3 +1,13 @@
+function resolveBusinessTimeZone() {
+  const configured = (process.env.BUSINESS_TIME_ZONE || "Asia/Dhaka").trim();
+  try {
+    new Intl.DateTimeFormat("en", { timeZone: configured }).format();
+    return configured;
+  } catch {
+    return "UTC";
+  }
+}
+
 export const siteConfig = {
   restaurantName: "Alif Restaurant",
   shortName: "Alif",
@@ -5,5 +15,5 @@ export const siteConfig = {
   logoPath: "/logo-mark.svg",
   phone: "+880 1XXX-XXXXXX",
   address: "Your restaurant address",
-  businessTimeZone: process.env.BUSINESS_TIME_ZONE || "Asia/Dhaka",
+  businessTimeZone: resolveBusinessTimeZone(),
 } as const;
