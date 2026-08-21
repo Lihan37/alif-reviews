@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LoaderCircle, X } from "lucide-react";
+import { LoaderCircle, MessageSquareHeart, ShieldCheck, X } from "lucide-react";
 import { saveReviewAction } from "@/app/actions/reviews";
 import { RatingSelector } from "@/components/RatingSelector";
 import { BilingualText } from "@/components/BilingualText";
@@ -52,6 +52,17 @@ export function ReviewForm({ review, onCancel, onSuccess }: { review?: Review | 
         <button type="button" onClick={continueToIdentity} disabled={!rating || reviewText.trim().length < 3 || reviewText.length > 1000} className="button-primary sm:flex-1">
           <BilingualText compact en={review ? "Continue" : "Submit review"} bn={review ? "পরবর্তী ধাপ" : "রিভিউ জমা দিন"} />
         </button>
+      </div>
+
+      <div className="flex flex-col gap-3 border-t border-stone-200 pt-5 text-sm text-stone-600 sm:flex-row sm:gap-6">
+        <span className="inline-flex items-center gap-2">
+          <ShieldCheck className="size-4 shrink-0 text-olive" aria-hidden="true" />
+          <BilingualText en="Private and secure" bn="ব্যক্তিগত ও নিরাপদ" />
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <MessageSquareHeart className="size-4 shrink-0 text-olive" aria-hidden="true" />
+          <BilingualText en="Takes about a minute" bn="সময় লাগবে প্রায় এক মিনিট" />
+        </span>
       </div>
 
       <dialog ref={dialogRef} onCancel={(event) => { event.preventDefault(); if (!pending) setDialogOpen(false); }}
